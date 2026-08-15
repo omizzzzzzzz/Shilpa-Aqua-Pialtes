@@ -425,6 +425,94 @@ h1, h2, h3 {
   font-size: 1.1rem;
 }
 
+/* ---------- Ticket quantity ---------- */
+.qty-section {
+  margin-bottom: 2rem;
+}
+.qty-section h3 {
+  font-size: 1rem;
+  margin-bottom: 0.35rem;
+  color: var(--tx);
+}
+.qty-sub {
+  font-size: 0.85rem;
+  color: var(--tx2);
+  margin-bottom: 1rem;
+}
+.qty-picker {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.qty-btn {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent-border);
+  background: var(--sf);
+  color: var(--accent);
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  font-family: var(--sans);
+  line-height: 1;
+}
+.qty-btn:hover { background: var(--accent-dim); border-color: var(--accent); transform: scale(1.05); }
+.qty-btn:active { transform: scale(0.95); }
+.qty-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+.qty-display {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 700;
+  min-width: 40px;
+  text-align: center;
+  color: var(--tx);
+}
+.pricing-card {
+  background: var(--sf);
+  border: 1.5px solid var(--accent-border);
+  border-radius: var(--rs);
+  padding: 1rem 1.25rem;
+  text-align: center;
+}
+.pricing-per-ticket {
+  font-size: 0.85rem;
+  color: var(--tx2);
+  margin-bottom: 0.25rem;
+}
+.pricing-per-ticket .old-price {
+  text-decoration: line-through;
+  color: var(--tx3);
+  margin-right: 0.25rem;
+}
+.pricing-per-ticket .new-price {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.pricing-total {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--tx);
+  margin-top: 0.35rem;
+}
+.pricing-total span {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+}
+.pricing-save {
+  font-size: 0.78rem;
+  color: var(--green);
+  font-weight: 600;
+  margin-top: 0.3rem;
+}
+
 /* ---------- Desktop QR fallback ---------- */
 .qr-fallback {
   display: none;
@@ -629,13 +717,37 @@ h1, h2, h3 {
 
     <!-- Session slots -->
     <div class="slots-section">
-      <h3>Upcoming Session</h3>
+      <h3>Pick a Time Slot</h3>
       <div class="slot-grid">
         <div class="slot selected" onclick="selectSlot(this)" data-slot="1">
           <div class="slot-date">Fri, 29 Aug</div>
           <div class="slot-time">7:00 – 8:00 PM</div>
           <div class="slot-spots">10 spots only</div>
         </div>
+        <div class="slot" onclick="selectSlot(this)" data-slot="2">
+          <div class="slot-date">Fri, 29 Aug</div>
+          <div class="slot-time">8:00 – 9:00 PM</div>
+          <div class="slot-spots">10 spots only</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ticket quantity -->
+    <div class="qty-section">
+      <h3>How Many Tickets?</h3>
+      <p class="qty-sub">Book for friends &amp; family — more you book, more you save</p>
+      <div class="qty-picker">
+        <button type="button" class="qty-btn" id="qtyMinus" onclick="changeQty(-1)">&#8722;</button>
+        <div class="qty-display" id="qtyDisplay">1</div>
+        <button type="button" class="qty-btn" id="qtyPlus" onclick="changeQty(1)">+</button>
+      </div>
+      <div class="pricing-card" id="pricingCard">
+        <div class="pricing-per-ticket" id="pricingPerTicket">
+          <span class="old-price">&#8377;3,000</span>
+          <span class="new-price">&#8377;2,800</span> / ticket
+        </div>
+        <div class="pricing-total" id="pricingTotal">Total: <span>&#8377;2,800</span></div>
+        <div class="pricing-save" id="pricingSave"></div>
       </div>
     </div>
 
@@ -666,7 +778,7 @@ h1, h2, h3 {
         I understand this is a pool-based workout and I'll bring swimwear or activewear.
       </label>
 
-      <button type="submit" class="submit-btn" id="submitBtn">Proceed to Pay &#8377;3,000</button>
+      <button type="submit" class="submit-btn" id="submitBtn">Proceed to Pay &#8377;2,800</button>
 
       <!-- UPI app picker (shown after form validation) -->
       <div class="upi-picker" id="upiPicker">
@@ -689,7 +801,7 @@ h1, h2, h3 {
             Other UPI
           </a>
         </div>
-        <p class="upi-picker-note">Tap your preferred app to complete &#8377;3,000 payment</p>
+        <p class="upi-picker-note" id="upiPickerNote">Tap your preferred app to complete &#8377;2,800 payment</p>
       </div>
 
       <!-- Desktop QR fallback -->
@@ -732,8 +844,58 @@ h1, h2, h3 {
 <script>
 var UPI_ID = 'shilpasfitnesstheory9@oksbi';
 var UPI_NAME = 'Shilpa Kanodia';
-var AMOUNT = '3000';
 var WA_NUMBER = '919323510066';
+var MRP = 3000;
+var PRICE_TIERS = [
+  { min: 1, price: 2800 },
+  { min: 2, price: 2600 },
+  { min: 3, price: 2500 }
+];
+var MAX_TICKETS = 10;
+var ticketQty = 1;
+
+function getPrice(qty) {
+  var price = PRICE_TIERS[0].price;
+  for (var i = 0; i < PRICE_TIERS.length; i++) {
+    if (qty >= PRICE_TIERS[i].min) price = PRICE_TIERS[i].price;
+  }
+  return price;
+}
+
+function formatNum(n) {
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+function updatePricing() {
+  var price = getPrice(ticketQty);
+  var total = price * ticketQty;
+  var saved = (MRP * ticketQty) - total;
+
+  document.getElementById('qtyDisplay').textContent = ticketQty;
+  document.getElementById('qtyMinus').disabled = ticketQty <= 1;
+  document.getElementById('qtyPlus').disabled = ticketQty >= MAX_TICKETS;
+
+  var perTicketHtml = '<span class="old-price">₹' + formatNum(MRP) + '</span>' +
+    '<span class="new-price">₹' + formatNum(price) + '</span> / ticket';
+  document.getElementById('pricingPerTicket').innerHTML = perTicketHtml;
+  document.getElementById('pricingTotal').innerHTML = 'Total: <span>₹' + formatNum(total) + '</span>' +
+    (ticketQty > 1 ? ' <span style="font-size:0.82rem;font-weight:400;color:var(--tx2);">(' + ticketQty + ' tickets)</span>' : '');
+  var saveEl = document.getElementById('pricingSave');
+  if (saved > 0) {
+    saveEl.textContent = 'You save ₹' + formatNum(saved);
+  } else {
+    saveEl.textContent = '';
+  }
+
+  document.getElementById('submitBtn').textContent = 'Proceed to Pay ₹' + formatNum(total);
+}
+
+function changeQty(delta) {
+  var next = ticketQty + delta;
+  if (next < 1 || next > MAX_TICKETS) return;
+  ticketQty = next;
+  updatePricing();
+}
 
 function selectSlot(el) {
   document.querySelectorAll('.slot').forEach(function(s) { s.classList.remove('selected'); });
@@ -746,29 +908,34 @@ function isMobile() {
 
 var pendingBooking = {};
 
-function buildUpiParams(name, slotDate) {
-  var note = 'AquaPilates ' + slotDate + ' ' + name;
+function buildUpiParams(name, slotDate, qty) {
+  var price = getPrice(qty);
+  var total = price * qty;
+  var note = 'AquaPilates ' + slotDate + ' ' + name + ' x' + qty;
   return 'pa=' + UPI_ID +
     '&pn=' + encodeURIComponent(UPI_NAME) +
-    '&am=' + AMOUNT +
+    '&am=' + total +
     '&cu=INR' +
     '&tn=' + encodeURIComponent(note);
 }
 
-function buildUpiUrl(appKey, name, slotDate) {
-  var params = buildUpiParams(name, slotDate);
+function buildUpiUrl(appKey, name, slotDate, qty) {
+  var params = buildUpiParams(name, slotDate, qty);
   if (appKey === 'gpay') return 'tez://upi/pay?' + params;
   if (appKey === 'phonepe') return 'phonepe://pay?' + params;
   if (appKey === 'paytm') return 'paytmmp://pay?' + params;
   return 'upi://pay?' + params;
 }
 
-function buildWhatsAppUrl(name, phone, email, slotDate, slotTime) {
-  var msg = 'Hi Shilpa! I just paid ₹3,000 for Aqua Pilates.\n\n' +
+function buildWhatsAppUrl(name, phone, email, slotDate, slotTime, qty) {
+  var price = getPrice(qty);
+  var total = price * qty;
+  var msg = 'Hi Shilpa! I just paid ₹' + formatNum(total) + ' for Aqua Pilates.\n\n' +
     'Name: ' + name + '\n' +
     'Phone: +91' + phone + '\n' +
     'Email: ' + email + '\n' +
-    'Session: ' + slotDate + ' (' + slotTime + ')\n\n' +
+    'Session: ' + slotDate + ' (' + slotTime + ')\n' +
+    'Tickets: ' + qty + ' (₹' + formatNum(price) + ' each)\n\n' +
     'Please confirm my booking!';
   return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
 }
@@ -778,7 +945,7 @@ function handleSubmit(e) {
 
   var selected = document.querySelector('.slot.selected');
   if (!selected) {
-    alert('Please choose a session date first.');
+    alert('Please choose a time slot first.');
     return;
   }
 
@@ -788,22 +955,25 @@ function handleSubmit(e) {
     return;
   }
 
+  var total = getPrice(ticketQty) * ticketQty;
   pendingBooking.name = document.getElementById('name').value;
   pendingBooking.phone = document.getElementById('phone').value;
   pendingBooking.email = document.getElementById('email').value;
   pendingBooking.slotDate = selected.querySelector('.slot-date').textContent;
   pendingBooking.slotTime = selected.querySelector('.slot-time').textContent;
+  pendingBooking.qty = ticketQty;
   pendingBooking.waUrl = buildWhatsAppUrl(
     pendingBooking.name, pendingBooking.phone, pendingBooking.email,
-    pendingBooking.slotDate, pendingBooking.slotTime
+    pendingBooking.slotDate, pendingBooking.slotTime, ticketQty
   );
 
   if (isMobile()) {
     document.getElementById('submitBtn').style.display = 'none';
     document.getElementById('upiPicker').style.display = 'block';
+    document.getElementById('upiPickerNote').textContent = 'Tap your preferred app to complete ₹' + formatNum(total) + ' payment';
     document.getElementById('upiPicker').scrollIntoView({ behavior: 'smooth', block: 'center' });
   } else {
-    var upiUrl = buildUpiUrl('upi', pendingBooking.name, pendingBooking.slotDate);
+    var upiUrl = buildUpiUrl('upi', pendingBooking.name, pendingBooking.slotDate, ticketQty);
     document.getElementById('qrFallback').style.display = 'block';
     generateQR(upiUrl);
     document.getElementById('waConfirmLink').href = pendingBooking.waUrl;
@@ -812,7 +982,7 @@ function handleSubmit(e) {
 }
 
 function payWithApp(appKey) {
-  var url = buildUpiUrl(appKey, pendingBooking.name, pendingBooking.slotDate);
+  var url = buildUpiUrl(appKey, pendingBooking.name, pendingBooking.slotDate, pendingBooking.qty);
   document.getElementById('waConfirmLink').href = pendingBooking.waUrl;
   window.location.href = url;
   setTimeout(function() { showPostPayment(); }, 2000);
@@ -848,7 +1018,8 @@ function generateQR(url) {
   ctx.fillText(UPI_ID, size/2, size/2 + 10);
   ctx.font = '11px system-ui, sans-serif';
   ctx.fillStyle = '#8A9CAA';
-  ctx.fillText('₹' + AMOUNT, size/2, size/2 + 30);
+  var total = getPrice(ticketQty) * ticketQty;
+  ctx.fillText('₹' + formatNum(total), size/2, size/2 + 30);
 
   qrBox.textContent = '';
   qrBox.appendChild(canvas);
