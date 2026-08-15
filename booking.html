@@ -744,17 +744,7 @@ function isMobile() {
   return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
 
-var ANDROID_PACKAGES = {
-  gpay: 'com.google.android.apps.nbu.paisa.user',
-  phonepe: 'com.phonepe.app',
-  paytm: 'net.one97.paytm'
-};
-
 var pendingBooking = {};
-
-function isAndroid() {
-  return /Android/i.test(navigator.userAgent);
-}
 
 function buildUpiParams(name, slotDate) {
   var note = 'AquaPilates ' + slotDate + ' ' + name;
@@ -767,10 +757,9 @@ function buildUpiParams(name, slotDate) {
 
 function buildUpiUrl(appKey, name, slotDate) {
   var params = buildUpiParams(name, slotDate);
-  var pkg = ANDROID_PACKAGES[appKey];
-  if (pkg && isAndroid()) {
-    return 'intent://pay?' + params + '#Intent;scheme=upi;package=' + pkg + ';end';
-  }
+  if (appKey === 'gpay') return 'tez://upi/pay?' + params;
+  if (appKey === 'phonepe') return 'phonepe://pay?' + params;
+  if (appKey === 'paytm') return 'paytmmp://pay?' + params;
   return 'upi://pay?' + params;
 }
 
