@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Aqua Pilates — Shilpa Kanodia</title>
+<meta name="description" content="Book your Aqua Pilates session with Shilpa Kanodia at Bombay Swim Club, ICONIQA Hotel, Andheri East, Mumbai. Limited to 10 spots.">
+<meta name="robots" content="noindex">
+<style>
+:root {
+  --bg: #FAFCFE;
+  --sf: #FFFFFF;
+  --sf2: #F0F6FA;
+  --accent: #0891B2;
+  --accent-dim: rgba(8, 145, 178, 0.08);
+  --accent-border: rgba(8, 145, 178, 0.15);
+  --cta: #E8590C;
+  --cta-h: #D14B08;
+  --tx: #1A2B3A;
+  --tx2: #4A6070;
+  --tx3: #8A9CAA;
+  --coral: #DC2626;
+  --green: #059669;
+  --r: 12px;
+  --rs: 8px;
+  --serif: Georgia, 'Palatino Linotype', 'Times New Roman', serif;
+  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--tx);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  line-height: 1.2;
+  text-wrap: balance;
+  color: var(--tx);
+}
+
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 2.5rem);
+  width: 100%;
+}
+
+/* ---------- Header ---------- */
+.bk-header {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(8, 145, 178, 0.1);
+  background: var(--sf);
+}
+.bk-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.back-link {
+  font-size: 0.85rem;
+  color: var(--tx2);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+}
+.back-link:hover { color: var(--accent); text-decoration: none; }
+.bk-logo {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Main content ---------- */
+.bk-main {
+  flex: 1;
+  padding: clamp(2rem, 6vw, 3.5rem) 0;
+}
+.bk-main h1 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin-bottom: 0.5rem;
+}
+.bk-main .bk-sub {
+  color: var(--tx2);
+  margin-bottom: 2.5rem;
+  font-size: 1.05rem;
+}
+
+/* ---------- Venue card ---------- */
+.venue-card {
+  background: var(--sf);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--r);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+.venue-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.25rem;
+}
+.venue-address {
+  color: var(--tx2);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+.venue-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.venue-tag {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.75rem;
+  background: var(--accent-dim);
+  border-radius: 100px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ---------- Map ---------- */
+.venue-map {
+  margin-top: 1rem;
+  border-radius: var(--rs);
+  overflow: hidden;
+  border: 1px solid rgba(8, 145, 178, 0.12);
+  position: relative;
+  background: #e8f0f6;
+}
+.venue-map svg { display: block; width: 100%; height: auto; }
+.map-directions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1rem;
+  background: var(--sf);
+  border-top: 1px solid rgba(8, 145, 178, 0.1);
+  font-size: 0.82rem;
+}
+.map-directions .map-addr {
+  color: var(--tx2);
+  line-height: 1.4;
+}
+.map-directions .map-addr strong { color: var(--tx); }
+.map-dir-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.45rem 0.9rem;
+  border-radius: 100px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.map-dir-btn:hover { background: #0782a0; text-decoration: none; }
+
+/* ---------- Session slots ---------- */
+.slots-section {
+  margin-bottom: 2rem;
+}
+.slots-section h3 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--tx);
+}
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+.slot {
+  background: var(--sf);
+  border: 1.5px solid rgba(8, 145, 178, 0.12);
+  border-radius: var(--rs);
+  padding: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  text-align: center;
+}
+.slot:hover {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  box-shadow: 0 2px 8px rgba(8, 145, 178, 0.1);
+}
+.slot.selected {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.15);
+}
+.slot-date {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--tx);
+}
+.slot-time {
+  font-size: 0.85rem;
+  color: var(--tx2);
+}
+.slot-spots {
+  font-size: 0.75rem;
+  color: var(--coral);
+  margin-top: 0.4rem;
+  font-weight: 600;
+}
+.slot-spots.available {
+  color: var(--green);
+}
+
+/* ---------- Form ---------- */
+.bk-form { margin-bottom: 2rem; }
+.bk-form h3 {
+  font-size: 1rem;
+  margin-bottom: 1.25rem;
+  color: var(--tx);
+}
+
+.field {
+  margin-bottom: 1.25rem;
+}
+.field label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--tx2);
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+.field input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: var(--sf);
+  border: 1.5px solid rgba(8, 145, 178, 0.15);
+  border-radius: var(--rs);
+  color: var(--tx);
+  font-family: var(--sans);
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.field input::placeholder { color: var(--tx3); }
+.field input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
+}
+.field input:invalid:not(:placeholder-shown) { border-color: var(--coral); }
+
+.phone-group {
+  display: flex;
+  gap: 0.5rem;
+}
+.phone-prefix {
+  width: 60px;
+  flex-shrink: 0;
+  text-align: center;
+  background: var(--sf2);
+  border: 1.5px solid rgba(8, 145, 178, 0.15);
+  border-radius: var(--rs);
+  color: var(--tx2);
+  font-size: 0.95rem;
+  padding: 0.85rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--tx2);
+  line-height: 1.5;
+  cursor: pointer;
+}
+.terms input[type="checkbox"] {
+  margin-top: 0.2rem;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
+/* ---------- Payment section ---------- */
+.payment-section {
+  margin-bottom: 2rem;
+}
+.payment-section h3 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.submit-btn {
+  display: block;
+  width: 100%;
+  background: var(--cta);
+  color: #fff;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 1rem;
+  border: none;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, opacity 0.2s;
+  letter-spacing: 0.01em;
+}
+.submit-btn:hover { background: var(--cta-h); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(232, 89, 12, 0.3); }
+.submit-btn:active { transform: none; }
+.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.upi-note {
+  text-align: center;
+  margin-top: 0.75rem;
+  font-size: 0.82rem;
+  color: var(--tx3);
+  line-height: 1.5;
+}
+.upi-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.6rem;
+  font-size: 0.75rem;
+  color: var(--tx3);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.upi-logos span {
+  padding: 0.3rem 0.65rem;
+  background: var(--sf2);
+  border-radius: 6px;
+  border: 1px solid rgba(8, 145, 178, 0.08);
+}
+
+.price-line {
+  text-align: center;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--tx3);
+}
+.price-line strong {
+  color: var(--accent);
+  font-family: var(--serif);
+  font-size: 1.1rem;
+}
+
+/* ---------- Desktop QR fallback ---------- */
+.qr-fallback {
+  display: none;
+  text-align: center;
+  padding: 1.5rem;
+  background: var(--sf);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--r);
+  margin-top: 1rem;
+}
+.qr-fallback p {
+  font-size: 0.85rem;
+  color: var(--tx2);
+  margin-bottom: 0.5rem;
+}
+.qr-fallback .qr-box {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  background: var(--sf2);
+  border: 1px dashed var(--accent-border);
+  border-radius: var(--rs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tx3);
+  font-size: 0.78rem;
+}
+
+/* ---------- Post-payment confirmation ---------- */
+.post-payment {
+  display: none;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: var(--sf);
+  border: 1px solid rgba(5, 150, 105, 0.2);
+  border-radius: var(--r);
+  margin-bottom: 2rem;
+}
+.post-payment .check-circle {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(5, 150, 105, 0.1);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1rem;
+}
+.post-payment .check-circle svg {
+  width: 28px; height: 28px; stroke: var(--green); fill: none;
+  stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.post-payment h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+  color: var(--green);
+}
+.post-payment p {
+  font-size: 0.92rem;
+  color: var(--tx2);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+.wa-confirm-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #25D366;
+  color: #fff;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+}
+.wa-confirm-btn:hover { background: #1fba59; transform: translateY(-2px); text-decoration: none; }
+.wa-confirm-btn svg { width: 20px; height: 20px; fill: #fff; }
+
+/* ---------- Trust note ---------- */
+.trust-note {
+  text-align: center;
+  padding: 1.25rem;
+  background: var(--sf2);
+  border-radius: var(--r);
+  margin-bottom: 2rem;
+  border: 1px solid rgba(8, 145, 178, 0.06);
+}
+.trust-note p {
+  font-size: 0.85rem;
+  color: var(--tx2);
+  line-height: 1.6;
+}
+
+/* ---------- Footer ---------- */
+.bk-footer {
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(8, 145, 178, 0.08);
+  text-align: center;
+  color: var(--tx3);
+  font-size: 0.78rem;
+}
+.bk-footer a { color: var(--accent); }
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="bk-header">
+  <div class="container">
+    <a href="aqua-pilates.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back
+    </a>
+    <span class="bk-logo">Aqua Pilates</span>
+  </div>
+</header>
+
+<!-- ========== MAIN ========== -->
+<main class="bk-main">
+  <div class="container">
+    <h1>Almost There</h1>
+    <p class="bk-sub">Pick a slot, fill in your details, pay via UPI — done.</p>
+
+    <!-- Venue -->
+    <div class="venue-card">
+      <h3>Bombay Swim Club</h3>
+      <p class="venue-address">ICONIQA Hotel, Marol, Andheri East, Mumbai</p>
+      <div class="venue-details">
+        <span class="venue-tag">Rooftop Pool</span>
+        <span class="venue-tag">Waist-Deep</span>
+        <span class="venue-tag">10 Spots Only</span>
+      </div>
+      <div class="venue-map">
+        <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="mapBg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#dbeafe"/>
+              <stop offset="100%" stop-color="#e0f2fe"/>
+            </linearGradient>
+          </defs>
+          <rect width="680" height="200" fill="url(#mapBg)"/>
+          <!-- Roads grid -->
+          <g stroke="#cbd5e1" stroke-width="1.5" fill="none" opacity="0.6">
+            <line x1="0" y1="60" x2="680" y2="60"/>
+            <line x1="0" y1="140" x2="680" y2="140"/>
+            <line x1="120" y1="0" x2="120" y2="200"/>
+            <line x1="340" y1="0" x2="340" y2="200"/>
+            <line x1="560" y1="0" x2="560" y2="200"/>
+          </g>
+          <!-- Major road (Andheri-Kurla Road) -->
+          <line x1="0" y1="100" x2="680" y2="100" stroke="#94a3b8" stroke-width="4" opacity="0.5"/>
+          <text x="30" y="96" font-family="system-ui,sans-serif" font-size="8" fill="#64748b" opacity="0.7">Andheri-Kurla Rd</text>
+          <!-- Western Express Highway -->
+          <line x1="200" y1="0" x2="200" y2="200" stroke="#94a3b8" stroke-width="5" opacity="0.4"/>
+          <text x="205" y="18" font-family="system-ui,sans-serif" font-size="8" fill="#64748b" opacity="0.7">W. Express Hwy</text>
+          <!-- Airport runway hint -->
+          <rect x="400" y="10" width="240" height="40" rx="4" fill="#94a3b8" opacity="0.12"/>
+          <text x="520" y="34" font-family="system-ui,sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle" opacity="0.6">Mumbai Airport T2</text>
+          <!-- Building blocks -->
+          <rect x="280" y="65" width="40" height="25" rx="3" fill="#cbd5e1" opacity="0.4"/>
+          <rect x="370" y="110" width="50" height="30" rx="3" fill="#cbd5e1" opacity="0.4"/>
+          <rect x="250" y="130" width="35" height="25" rx="3" fill="#cbd5e1" opacity="0.4"/>
+          <rect x="460" y="70" width="45" height="20" rx="3" fill="#cbd5e1" opacity="0.4"/>
+          <!-- Pin location (ICONIQA) -->
+          <g transform="translate(340, 100)">
+            <!-- Pulse ring -->
+            <circle cx="0" cy="0" r="18" fill="rgba(8,145,178,0.12)" stroke="rgba(8,145,178,0.25)" stroke-width="1">
+              <animate attributeName="r" values="14;22;14" dur="2.5s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.4;0;0.4" dur="2.5s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Pin shadow -->
+            <ellipse cx="0" cy="2" rx="8" ry="3" fill="rgba(0,0,0,0.15)"/>
+            <!-- Pin -->
+            <path d="M0-24c-7.7 0-14 6.3-14 14 0 10.5 14 24 14 24s14-13.5 14-24c0-7.7-6.3-14-14-14z" fill="#0891B2"/>
+            <circle cx="0" cy="-10" r="5.5" fill="#fff"/>
+          </g>
+          <!-- Label -->
+          <rect x="365" y="78" width="130" height="22" rx="4" fill="#0891B2" opacity="0.95"/>
+          <text x="430" y="93" font-family="system-ui,sans-serif" font-size="10" fill="#fff" text-anchor="middle" font-weight="600">Bombay Swim Club</text>
+          <!-- Marol label -->
+          <text x="310" y="160" font-family="system-ui,sans-serif" font-size="9" fill="#94a3b8">Marol, Navpada</text>
+        </svg>
+        <div class="map-directions">
+          <div class="map-addr">
+            <strong>ICONIQA Hotel (Rooftop)</strong><br>
+            Opp. Terminal 2, Marol, Andheri East
+          </div>
+          <a href="https://maps.google.com/?q=Bombay+Swim+Club+ICONIQA+Hotel+Andheri+East+Mumbai" target="_blank" rel="noopener" class="map-dir-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            Directions
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Session slots -->
+    <div class="slots-section">
+      <h3>Upcoming Session</h3>
+      <div class="slot-grid">
+        <div class="slot selected" onclick="selectSlot(this)" data-slot="1">
+          <div class="slot-date">Fri, 29 Aug</div>
+          <div class="slot-time">7:00 – 8:00 PM</div>
+          <div class="slot-spots">10 spots only</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Booking form -->
+    <form class="bk-form" id="bookingForm" onsubmit="handleSubmit(event)">
+      <h3>Your Details</h3>
+
+      <div class="field">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name">
+      </div>
+
+      <div class="field">
+        <label for="phone">Mobile Number</label>
+        <div class="phone-group">
+          <span class="phone-prefix">+91</span>
+          <input type="tel" id="phone" name="phone" placeholder="98765 43210" required pattern="[0-9]{10}" autocomplete="tel-national" inputmode="numeric">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+      </div>
+
+      <label class="terms">
+        <input type="checkbox" required>
+        I understand this is a pool-based workout and I'll bring swimwear or activewear.
+      </label>
+
+      <button type="submit" class="submit-btn" id="submitBtn">Pay &#8377;3,000 via UPI</button>
+      <div class="upi-note">
+        Opens GPay, Paytm, PhonePe, or any UPI app
+        <div class="upi-logos">
+          <span>GPay</span>
+          <span>Paytm</span>
+          <span>PhonePe</span>
+          <span>UPI</span>
+        </div>
+      </div>
+
+      <!-- Desktop QR fallback -->
+      <div class="qr-fallback" id="qrFallback">
+        <p>On desktop? Scan this QR with any UPI app to pay:</p>
+        <div class="qr-box" id="qrBox">QR code loading...</div>
+        <p style="margin-top:0.75rem; font-size:0.78rem;">Or open this page on your phone for one-tap payment.</p>
+      </div>
+    </form>
+
+    <!-- Post-payment confirmation (hidden until payment initiated) -->
+    <div class="post-payment" id="postPayment">
+      <div class="check-circle">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3>Payment Initiated</h3>
+      <p>If you've completed the payment, tap below to confirm your booking on WhatsApp. Shilpa will send you the venue details and what-to-bring checklist.</p>
+      <a id="waConfirmLink" href="#" class="wa-confirm-btn" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Confirm on WhatsApp
+      </a>
+      <p style="margin-top:0.75rem; font-size:0.78rem; color:var(--tx3);">Didn't complete payment? <a href="#" onclick="resetForm(); return false;">Go back</a></p>
+    </div>
+
+    <!-- Trust -->
+    <div class="trust-note" id="trustNote">
+      <p>&#128274; Your info is only used to confirm your booking and share venue details via WhatsApp.</p>
+    </div>
+  </div>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="bk-footer">
+  <div class="container">
+    <p>Aqua Pilates by <a href="https://www.instagram.com/pilatescoachshilpa/" target="_blank" rel="noopener">@pilatescoachshilpa</a></p>
+    <p style="margin-top:0.35rem">&copy; 2026 Shilpa Kanodia</p>
+  </div>
+</footer>
+
+<script>
+var UPI_ID = 'shilpasfitnessthoery9@oksbi';
+var UPI_NAME = 'Shilpa Kanodia';
+var AMOUNT = '3000';
+var WA_NUMBER = '919323510066';
+
+function selectSlot(el) {
+  document.querySelectorAll('.slot').forEach(function(s) { s.classList.remove('selected'); });
+  el.classList.add('selected');
+}
+
+function isMobile() {
+  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+function buildUpiUrl(name, phone, email, slotDate, slotTime) {
+  var note = 'AquaPilates ' + slotDate + ' ' + name;
+  return 'upi://pay?pa=' + encodeURIComponent(UPI_ID) +
+    '&pn=' + encodeURIComponent(UPI_NAME) +
+    '&am=' + AMOUNT +
+    '&cu=INR' +
+    '&tn=' + encodeURIComponent(note);
+}
+
+function buildWhatsAppUrl(name, phone, email, slotDate, slotTime) {
+  var msg = 'Hi Shilpa! I just paid ₹3,000 for Aqua Pilates.\n\n' +
+    'Name: ' + name + '\n' +
+    'Phone: +91' + phone + '\n' +
+    'Email: ' + email + '\n' +
+    'Session: ' + slotDate + ' (' + slotTime + ')\n\n' +
+    'Please confirm my booking!';
+  return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+
+  var selected = document.querySelector('.slot.selected');
+  if (!selected) {
+    alert('Please choose a session date first.');
+    return;
+  }
+
+  var form = document.getElementById('bookingForm');
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+
+  var name = document.getElementById('name').value;
+  var phone = document.getElementById('phone').value;
+  var email = document.getElementById('email').value;
+  var slotDate = selected.querySelector('.slot-date').textContent;
+  var slotTime = selected.querySelector('.slot-time').textContent;
+
+  var upiUrl = buildUpiUrl(name, phone, email, slotDate, slotTime);
+  var waUrl = buildWhatsAppUrl(name, phone, email, slotDate, slotTime);
+
+  document.getElementById('waConfirmLink').href = waUrl;
+
+  if (isMobile()) {
+    window.location.href = upiUrl;
+  } else {
+    document.getElementById('qrFallback').style.display = 'block';
+    generateQR(upiUrl);
+  }
+
+  setTimeout(function() {
+    showPostPayment();
+  }, isMobile() ? 2000 : 500);
+}
+
+function showPostPayment() {
+  document.getElementById('bookingForm').style.display = 'none';
+  document.getElementById('postPayment').style.display = 'block';
+  document.getElementById('postPayment').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetForm() {
+  document.getElementById('postPayment').style.display = 'none';
+  document.getElementById('bookingForm').style.display = 'block';
+  document.getElementById('qrFallback').style.display = 'none';
+}
+
+function generateQR(url) {
+  var qrBox = document.getElementById('qrBox');
+  var size = 200;
+  var data = encodeURIComponent(url);
+  var canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  var ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#F0F6FA';
+  ctx.fillRect(0, 0, size, size);
+  ctx.fillStyle = '#1A2B3A';
+  ctx.font = '12px system-ui, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('Scan with any UPI app', size/2, size/2 - 10);
+  ctx.fillText(UPI_ID, size/2, size/2 + 10);
+  ctx.font = '11px system-ui, sans-serif';
+  ctx.fillStyle = '#8A9CAA';
+  ctx.fillText('₹' + AMOUNT, size/2, size/2 + 30);
+
+  qrBox.textContent = '';
+  qrBox.appendChild(canvas);
+
+  var note = document.createElement('p');
+  note.style.cssText = 'font-size:0.72rem; color:var(--tx3); margin-top:0.5rem;';
+  note.textContent = 'UPI ID: ' + UPI_ID;
+  qrBox.parentNode.appendChild(note);
+}
+</script>
+</body>
+</html>
