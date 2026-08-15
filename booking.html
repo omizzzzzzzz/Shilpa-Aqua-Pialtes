@@ -744,26 +744,34 @@ function isMobile() {
   return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
 
-var APP_SCHEMES = {
-  gpay: 'tez://upi/pay',
-  phonepe: 'phonepe://pay',
-  paytm: 'paytmmp://pay',
-  upi: 'upi://pay'
+var ANDROID_PACKAGES = {
+  gpay: 'com.google.android.apps.nbu.paisa.user',
+  phonepe: 'com.phonepe.app',
+  paytm: 'net.one97.paytm'
 };
 
 var pendingBooking = {};
 
+function isAndroid() {
+  return /Android/i.test(navigator.userAgent);
+}
+
 function buildUpiParams(name, slotDate) {
   var note = 'AquaPilates ' + slotDate + ' ' + name;
-  return 'pa=' + encodeURIComponent(UPI_ID) +
+  return 'pa=' + UPI_ID +
     '&pn=' + encodeURIComponent(UPI_NAME) +
     '&am=' + AMOUNT +
     '&cu=INR' +
     '&tn=' + encodeURIComponent(note);
 }
 
-function buildUpiUrl(scheme, name, slotDate) {
-  return scheme + '?' + buildUpiParams(name, slotDate);
+function buildUpiUrl(appKey, name, slotDate) {
+  var params = buildUpiParams(name, slotDate);
+  var pkg = ANDROID_PACKAGES[appKey];
+  if (pkg && isAndroid()) {
+    return 'intent://pay?' + params + '#Intent;scheme=upi;package=' + pkg + ';end';
+  }
+  return 'upi://pay?' + params;
 }
 
 function buildWhatsAppUrl(name, phone, email, slotDate, slotTime) {
@@ -806,7 +814,7 @@ function handleSubmit(e) {
     document.getElementById('upiPicker').style.display = 'block';
     document.getElementById('upiPicker').scrollIntoView({ behavior: 'smooth', block: 'center' });
   } else {
-    var upiUrl = buildUpiUrl(APP_SCHEMES.upi, pendingBooking.name, pendingBooking.slotDate);
+    var upiUrl = buildUpiUrl('upi', pendingBooking.name, pendingBooking.slotDate);
     document.getElementById('qrFallback').style.display = 'block';
     generateQR(upiUrl);
     document.getElementById('waConfirmLink').href = pendingBooking.waUrl;
@@ -815,8 +823,7 @@ function handleSubmit(e) {
 }
 
 function payWithApp(appKey) {
-  var scheme = APP_SCHEMES[appKey] || APP_SCHEMES.upi;
-  var url = buildUpiUrl(scheme, pendingBooking.name, pendingBooking.slotDate);
+  var url = buildUpiUrl(appKey, pendingBooking.name, pendingBooking.slotDate);
   document.getElementById('waConfirmLink').href = pendingBooking.waUrl;
   window.location.href = url;
   setTimeout(function() { showPostPayment(); }, 2000);
