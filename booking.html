@@ -735,7 +735,7 @@ h1, h2, h3 {
     <!-- Ticket quantity -->
     <div class="qty-section">
       <h3>How Many Tickets?</h3>
-      <p class="qty-sub">Book for friends &amp; family — more you book, more you save</p>
+      <p class="qty-sub">Bring your friends along — bigger the group, bigger the discount</p>
       <div class="qty-picker">
         <button type="button" class="qty-btn" id="qtyMinus" onclick="changeQty(-1)">&#8722;</button>
         <div class="qty-display" id="qtyDisplay">1</div>
@@ -851,6 +851,7 @@ var PRICE_TIERS = [
   { min: 2, price: 2600 },
   { min: 3, price: 2500 }
 ];
+var MIN_PRICE = 2500;
 var MAX_TICKETS = 10;
 var ticketQty = 1;
 
@@ -859,7 +860,7 @@ function getPrice(qty) {
   for (var i = 0; i < PRICE_TIERS.length; i++) {
     if (qty >= PRICE_TIERS[i].min) price = PRICE_TIERS[i].price;
   }
-  return price;
+  return Math.max(price, MIN_PRICE);
 }
 
 function formatNum(n) {
