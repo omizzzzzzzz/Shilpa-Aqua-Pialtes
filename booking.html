@@ -845,6 +845,7 @@ h1, h2, h3 {
 var UPI_ID = 'shilpasfitnesstheory9@oksbi';
 var UPI_NAME = 'Shilpa Kanodia';
 var WA_NUMBER = '919323510066';
+var SHEET_URL = ''; // paste your Google Apps Script web app URL here
 var MRP = 3000;
 var PRICE_TIERS = [
   { min: 1, price: 2800 },
@@ -974,6 +975,18 @@ function handleSubmit(e) {
     document.getElementById('upiPickerNote').textContent = 'Tap your preferred app to complete ₹' + formatNum(total) + ' payment';
     document.getElementById('upiPicker').scrollIntoView({ behavior: 'smooth', block: 'center' });
   } else {
+    var price = getPrice(ticketQty);
+    logBooking({
+      name: pendingBooking.name,
+      phone: pendingBooking.phone,
+      email: pendingBooking.email,
+      slotDate: pendingBooking.slotDate,
+      slotTime: pendingBooking.slotTime,
+      tickets: ticketQty,
+      perTicket: price,
+      total: price * ticketQty,
+      paymentApp: 'desktop-qr'
+    });
     var upiUrl = buildUpiUrl('upi', pendingBooking.name, pendingBooking.slotDate, ticketQty);
     document.getElementById('qrFallback').style.display = 'block';
     generateQR(upiUrl);
@@ -983,6 +996,19 @@ function handleSubmit(e) {
 }
 
 function payWithApp(appKey) {
+  var price = getPrice(pendingBooking.qty);
+  var total = price * pendingBooking.qty;
+  logBooking({
+    name: pendingBooking.name,
+    phone: pendingBooking.phone,
+    email: pendingBooking.email,
+    slotDate: pendingBooking.slotDate,
+    slotTime: pendingBooking.slotTime,
+    tickets: pendingBooking.qty,
+    perTicket: price,
+    total: total,
+    paymentApp: appKey
+  });
   var url = buildUpiUrl(appKey, pendingBooking.name, pendingBooking.slotDate, pendingBooking.qty);
   document.getElementById('waConfirmLink').href = pendingBooking.waUrl;
   window.location.href = url;
@@ -1030,6 +1056,67 @@ function generateQR(url) {
   note.textContent = 'UPI ID: ' + UPI_ID;
   qrBox.parentNode.appendChild(note);
 }
+
+// ---- Google Sheet tracking ----
+var pageLoadTime = Date.now();
+var bookingLogged = false;
+
+function sendToSheet(payload) {
+  if (!SHEET_URL) return;
+  try {
+    navigator.sendBeacon(SHEET_URL, JSON.stringify(payload));
+  } catch (_) {
+    var x = new XMLHttpRequest();
+    x.open('POST', SHEET_URL, true);
+    x.setRequestHeader('Content-Type', 'text/plain');
+    x.send(JSON.stringify(payload));
+  }
+}
+
+function logBooking(data) {
+  bookingLogged = true;
+  data.type = 'booking';
+  sendToSheet(data);
+}
+
+function getReachedStep() {
+  if (document.getElementById('upiPicker').style.display === 'block') return 'app-picker';
+  if (document.getElementById('qrFallback').style.display === 'block') return 'qr-code';
+  var name = document.getElementById('name').value;
+  var phone = document.getElementById('phone').value;
+  var email = document.getElementById('email').value;
+  if (email) return 'filled-email';
+  if (phone) return 'filled-phone';
+  if (name) return 'filled-name';
+  return 'viewed-page';
+}
+
+window.addEventListener('beforeunload', function() {
+  if (bookingLogged) return;
+  var name = document.getElementById('name').value;
+  var phone = document.getElementById('phone').value;
+  var email = document.getElementById('email').value;
+  if (!name && !phone && !email) {
+    sendToSheet({
+      type: 'dropoff',
+      reachedStep: 'viewed-page',
+      tickets: ticketQty,
+      timeOnPage: Math.round((Date.now() - pageLoadTime) / 1000)
+    });
+    return;
+  }
+  var selected = document.querySelector('.slot.selected');
+  sendToSheet({
+    type: 'dropoff',
+    name: name,
+    phone: phone ? '+91' + phone : '',
+    email: email,
+    slotSelected: selected ? selected.querySelector('.slot-date').textContent + ' ' + selected.querySelector('.slot-time').textContent : 'none',
+    tickets: ticketQty,
+    reachedStep: getReachedStep(),
+    timeOnPage: Math.round((Date.now() - pageLoadTime) / 1000)
+  });
+});
 </script>
 </body>
 </html>
