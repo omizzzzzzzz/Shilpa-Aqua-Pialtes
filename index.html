@@ -501,12 +501,14 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.05; letter-spacing: -0.
 }
 .video-modal-close:hover { background: rgba(255,255,255,0.2); }
 .video-modal-close svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; }
-.video-modal .video-placeholder-modal {
-  width: min(90vw, 800px); aspect-ratio: 16/9;
-  background: rgba(255,255,255,0.04); border-radius: var(--r);
-  border: 1px dashed rgba(255,255,255,0.1);
-  display: flex; align-items: center; justify-content: center;
-  color: rgba(255,255,255,0.3); font-size: 0.85rem; text-align: center;
+.video-modal .video-container {
+  width: min(85vw, 360px); aspect-ratio: 9/16;
+  border-radius: var(--r);
+  overflow: hidden;
+  background: #000;
+}
+.video-modal .video-container iframe {
+  width: 100%; height: 100%; border: none;
 }
 
 /* ---- Footer ---- */
@@ -806,12 +808,8 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.05; letter-spacing: -0.
   <button class="video-modal-close" onclick="closeVideo(event)" aria-label="Close video">
     <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
-  <div class="video-placeholder-modal">
-    <div>
-      <div style="font-size:2rem; margin-bottom:0.5rem;">&#9654;</div>
-      Video will appear here<br>
-      <span style="font-size:0.75rem; opacity:0.5;">Add video URL to activate</span>
-    </div>
+  <div class="video-container">
+    <iframe id="ytPlayer" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </div>
 </div>
 
@@ -845,27 +843,24 @@ h1, h2, h3 { font-family: var(--display); line-height: 1.05; letter-spacing: -0.
   }
   setInterval(tick, 1000);
 
+  var YT_ID = 'QYIdIejjxmE';
   window.openVideo = function() {
+    document.getElementById('ytPlayer').src = 'https://www.youtube.com/embed/' + YT_ID + '?autoplay=1&rel=0&modestbranding=1';
     document.getElementById('videoModal').classList.add('open');
     document.body.style.overflow = 'hidden';
-    var vid = document.querySelector('#videoModal video');
-    if (vid) { vid.play(); vid.muted = false; }
   };
+  function stopVideo() {
+    document.getElementById('videoModal').classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('ytPlayer').src = '';
+  }
   window.closeVideo = function(e) {
     if (e.target === document.getElementById('videoModal') || e.currentTarget.classList.contains('video-modal-close')) {
-      document.getElementById('videoModal').classList.remove('open');
-      document.body.style.overflow = '';
-      var vid = document.querySelector('#videoModal video');
-      if (vid) vid.pause();
+      stopVideo();
     }
   };
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      document.getElementById('videoModal').classList.remove('open');
-      document.body.style.overflow = '';
-      var vid = document.querySelector('#videoModal video');
-      if (vid) vid.pause();
-    }
+    if (e.key === 'Escape') stopVideo();
   });
 
   var cta = document.getElementById('heroCta');
